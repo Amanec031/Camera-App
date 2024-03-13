@@ -71,7 +71,7 @@ const WebcamCapture = ({ onCapture }) => {
         const imageSrc = webcamRef.current.getScreenshot();
         setImage(imageSrc);
         onCapture(imageSrc);
-    }, [webcamRef, onCapture]);
+    }, [webcamRef,onCapture]);
 
     return (
         <div className="webcam-container">
