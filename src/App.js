@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useRef } from 'react';
 
-function App() {
+const App = () => {
+  const videoRef = useRef(null);
+  const [photoData, setPhotoData] = useState(null);
+
+  const startCamera = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      videoRef.current.srcObject = stream;
+    } catch (error) {
+      console.error('Error accessing camera:', error);
+    }
+  };
+
+  const takePhoto = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = videoRef.current.videoWidth;
+    canvas.height = videoRef.current.videoHeight;
+    canvas.getContext('2d').drawImage(videoRef.current, 0, 0);
+
+    const dataUrl = canvas.toDataURL('image/jpeg');
+    setPhotoData(dataUrl);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button onClick={startCamera}>Start Camera</button>
+      <button onClick={takePhoto}>Take Photo</button>
+      <br />
+      <video ref={videoRef} autoPlay />
+      {photoData && <img src={photoData} alt="Captured" />}
     </div>
   );
-}
+};
 
 export default App;
