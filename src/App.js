@@ -23,8 +23,13 @@ function Camera() {
     // Convert the canvas image to a data URL
     const photo = canvas.toDataURL('image/jpeg');
 
-    // You can now use this photo data URL as needed, such as uploading it to a server
-    console.log('Photo taken:', photo);
+    // Create a link element to download the photo
+    const link = document.createElement('a');
+    link.href = photo;
+    link.download = 'photo.jpeg';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -32,7 +37,7 @@ function Camera() {
       <button onClick={startCamera}>Start Camera</button>
       <button onClick={takePhoto}>Take Photo</button>
       <video ref={videoRef} autoPlay style={{ width: '100%', maxWidth: '500px', maxHeight: '500px' }} />
-      <canvas ref={canvasRef} style={{ display: 'none' }} />
+      <canvas ref={canvasRef} style={{ display: 'none' }} width={640} height={480} />
     </div>
   );
 }
