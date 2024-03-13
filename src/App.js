@@ -1,37 +1,49 @@
 import React, { useState, useRef } from 'react';
 
-const App = () => {
-  const videoRef = useRef(null);
-  const [photoData, setPhotoData] = useState(null);
+const Camera = () => {
+  const [cameraStream, setCameraStream] = useState(null);
+  const videoRef = useRef();
 
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      videoRef.current.srcObject = stream;
-    } catch (error) {
-      console.error('Error accessing camera:', error);
+      setCameraStream(stream);
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+    } catch (err) {
+      console.error('Error accessing camera:', err);
     }
   };
 
-  const takePhoto = () => {
-    const canvas = document.createElement('canvas');
-    canvas.width = videoRef.current.videoWidth;
-    canvas.height = videoRef.current.videoHeight;
-    canvas.getContext('2d').drawImage(videoRef.current, 0, 0);
+  const stopCamera = () => {
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(track => track.stop());
+      setCameraStream(null);
+    }
+  };
 
-    const dataUrl = canvas.toDataURL('image/jpeg');
-    setPhotoData(dataUrl);
+  const capturePhoto = () => {
+    if (videoRef.current) {
+      const canvas = document.createElement('canvas');
+      canvas.width = videoRef.current.videoWidth;
+      canvas.height = videoRef.current.videoHeight;
+      canvas.getContext('2d').drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+      const photoData = canvas.toDataURL('image/jpeg');
+      console.log('Captured photo:', photoData);
+    }
   };
 
   return (
     <div>
-      <button onClick={startCamera}>Start Camera</button>
-      <button onClick={takePhoto}>Take Photo</button>
-      <br />
-      <video ref={videoRef} autoPlay />
-      {photoData && <img src={photoData} alt="Captured" />}
+      <video ref={videoRef} autoPlay playsInline />
+      <div>
+        <button onClick={startCamera}>Start Camera</button>
+        <button onClick={stopCamera}>Stop Camera</button>
+        <button onClick={capturePhoto}>Capture Photo</button>
+      </div>
     </div>
   );
 };
 
-export default App;
+export default Camera;
