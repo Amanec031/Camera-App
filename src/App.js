@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-const CameraApp = () => {
+const App = () => {
   const [isCameraOn, setIsCameraOn] = useState(false);
   const videoRef = useRef(null);
 
@@ -48,4 +48,4 @@ const CameraApp = () => {
   );
 };
 
-export default CameraApp;
+export default App;
