@@ -1,49 +1,51 @@
 import React, { useState, useRef } from 'react';
 
-const Camera = () => {
-  const [cameraStream, setCameraStream] = useState(null);
-  const videoRef = useRef();
+const CameraApp = () => {
+  const [isCameraOn, setIsCameraOn] = useState(false);
+  const videoRef = useRef(null);
 
   const startCamera = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      setCameraStream(stream);
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-      }
+      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+      videoRef.current.srcObject = stream;
+      setIsCameraOn(true);
     } catch (err) {
       console.error('Error accessing camera:', err);
     }
   };
 
   const stopCamera = () => {
-    if (cameraStream) {
-      cameraStream.getTracks().forEach(track => track.stop());
-      setCameraStream(null);
+    const stream = videoRef.current.srcObject;
+    if (stream) {
+      const tracks = stream.getTracks();
+      tracks.forEach(track => track.stop());
+      videoRef.current.srcObject = null;
+      setIsCameraOn(false);
     }
   };
 
-  const capturePhoto = () => {
-    if (videoRef.current) {
-      const canvas = document.createElement('canvas');
-      canvas.width = videoRef.current.videoWidth;
-      canvas.height = videoRef.current.videoHeight;
-      canvas.getContext('2d').drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-      const photoData = canvas.toDataURL('image/jpeg');
-      console.log('Captured photo:', photoData);
-    }
+  const takePhoto = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = videoRef.current.videoWidth;
+    canvas.height = videoRef.current.videoHeight;
+    canvas.getContext('2d').drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+    const photoURL = canvas.toDataURL('image/png');
+    // Here, you can save the photoURL or do whatever you want with it.
   };
 
   return (
     <div>
-      <video ref={videoRef} autoPlay playsInline />
-      <div>
+      {isCameraOn ? (
+        <div>
+          <video ref={videoRef} autoPlay playsInline />
+          <button onClick={takePhoto}>Take Photo</button>
+          <button onClick={stopCamera}>Stop Camera</button>
+        </div>
+      ) : (
         <button onClick={startCamera}>Start Camera</button>
-        <button onClick={stopCamera}>Stop Camera</button>
-        <button onClick={capturePhoto}>Capture Photo</button>
-      </div>
+      )}
     </div>
   );
 };
 
-export default Camera;
+export default CameraApp;
