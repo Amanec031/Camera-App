@@ -1,17 +1,10 @@
 import React, { useRef, useState } from 'react';
-import Webcam from 'react-webcam';
 
-const videoConstraints = {
-    width: 220,
-    height: 200,
-    facingMode: 'user'
-};
 
 const WebcamCapture = ({ onImageCaptured }) => {
     // const [image, se}tImage] = useState(null);
     const webcamRef = useRef(null);
     const canvasRef = useRef(null);
-    const [capturedImage, setCapturedImage] = useState(null);
 
     // const handleCapture = () => {
     //     const imageSrc = webcamRef.current.getScreenshot();
@@ -36,8 +29,6 @@ const WebcamCapture = ({ onImageCaptured }) => {
 
         // Convert the canvas image to a data URL
         const photo = canvas.toDataURL('image/jpeg');
-
-        setCapturedImage(photo);
 
         if (onImageCaptured) {
             onImageCaptured(photo);
