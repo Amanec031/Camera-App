@@ -8,7 +8,7 @@ const Home = () => {
 
     const submitForm = (e) => {
         e.preventDefault();
-        alert("Form submitted");
+        // alert("Form submitted");
         setComplaint('');
         setSection('');
     };

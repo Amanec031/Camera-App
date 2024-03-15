@@ -1,5 +1,5 @@
 
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import Webcam from 'react-webcam';
 
 const videoConstraints = {
