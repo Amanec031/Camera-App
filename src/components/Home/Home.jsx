@@ -1,18 +1,20 @@
-
-
 // import React, { useState } from 'react';
 // import './homeStyles.css';
-// import { WebcamCapture } from '../Webcam/Webcam'; // Import WebcamCapture as named export
+// import { WebcamCapture } from '../Webcam/Webcam';
 
 // const Home = () => {
-//     const [name, setName] = useState('');
-//     const [email, setEmail] = useState('');
+//     const [complaint, setComplaint] = useState('');
+//     const [section, setSection] = useState('');
 
 //     const submitForm = (e) => {
 //         e.preventDefault();
 //         alert("Form submitted");
-//         setName('');
-//         setEmail('');
+//         setComplaint('');
+//         setSection('');
+//     };
+
+//     const handleSectionChange = (e) => {
+//         setSection(e.target.value);
 //     };
 
 //     return (
@@ -22,8 +24,21 @@
 //                     <h1>Fill up this form!</h1>
 //                     <form className="form" onSubmit={submitForm}>
 //                         <WebcamCapture />
-//                         <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-//                         <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+//                         <div className="complaint-section">
+//                             <textarea
+//                                 placeholder="Write your complaint..."
+//                                 value={complaint}
+//                                 onChange={(e) => setComplaint(e.target.value)}
+//                             />
+//                         </div>
+//                         <div className="dropdown-section">
+//                             <select value={section} onChange={handleSectionChange}>
+//                                 <option value="">Select Section</option>
+//                                 <option value="Sanitation and Toiletry">Sanitation and Toiletry</option>
+//                                 <option value="Health and Medical">Health and Medical</option>
+//                                 <option value="Fire">Fire</option>
+//                             </select>
+//                         </div>
 //                         <button type="submit" id="login-button">Submit</button>
 //                     </form>
 //                 </div>
@@ -36,32 +51,21 @@
 
 import React, { useState } from 'react';
 import './homeStyles.css';
-import { WebcamCapture } from '../Webcam/Webcam';
+import WebcamCapture from '../Webcam/Webcam'; // Changed import statement
 
 const Home = () => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [image, setImage] = useState('');
+    const [complaint, setComplaint] = useState('');
+    const [section, setSection] = useState('');
 
     const submitForm = (e) => {
         e.preventDefault();
         alert("Form submitted");
-        setName('');
-        setEmail('');
-        setImage('');
+        setComplaint('');
+        setSection('');
     };
 
-    const handleCapture = (imageSrc) => {
-        setImage(imageSrc);
-    };
-
-    const handleImageUpload = (e) => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-            setImage(reader.result);
-        };
+    const handleSectionChange = (e) => {
+        setSection(e.target.value);
     };
 
     return (
@@ -70,20 +74,22 @@ const Home = () => {
                 <div className="text">
                     <h1>Fill up this form!</h1>
                     <form className="form" onSubmit={submitForm}>
-                        <WebcamCapture onCapture={handleCapture} />
-                        <label htmlFor="upload-button" className="upload-label">
-                            Upload Image
-                        </label>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageUpload}
-                            id="upload-button"
-                            capture="environment"
-                            className="upload-input"
-                        />
-                        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+                        <WebcamCapture /> {/* Changed component name */}
+                        <div className="complaint-section">
+                            <textarea
+                                placeholder="Write your complaint..."
+                                value={complaint}
+                                onChange={(e) => setComplaint(e.target.value)}
+                            />
+                        </div>
+                        <div className="dropdown-section">
+                            <select value={section} onChange={handleSectionChange}>
+                                <option value="">Select Section</option>
+                                <option value="Sanitation and Toiletry">Sanitation and Toiletry</option>
+                                <option value="Health and Medical">Health and Medical</option>
+                                <option value="Fire">Fire</option>
+                            </select>
+                        </div>
                         <button type="submit" id="login-button">Submit</button>
                     </form>
                 </div>
@@ -93,4 +99,3 @@ const Home = () => {
 };
 
 export default Home;
-

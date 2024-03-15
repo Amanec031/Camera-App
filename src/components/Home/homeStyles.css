@@ -14,7 +14,7 @@
     box-sizing: border-box;
     /* background-color: rgb(250, 193, 193); */
     background: #FBD3E9;  /* fallback for old browsers */
-    background: linear-gradient(to left, #FBD3E9, #0e6e02);
+    background: linear-gradient(to left, #FBD3E9, #7e67e2);
     margin: 0;
     min-height:80vh;
     padding:60px 0;
@@ -32,7 +32,7 @@
     }
     .home-container .container h1 {
     font-size: 40px;
-    color:#0e6e02;
+    color:#022a6e;
     font-weight:600;
     animation: fadein 3s;
     margin-bottom:20px;
@@ -56,7 +56,7 @@
     -moz-appearance: none;
     appearance: none;
     outline: 0;
-    border: 1px solid #0e6e02;
+    border: 1px solid #7e67e2;
     width: 55%;
     border-radius: 3px;
     padding: 10px 15px;
@@ -64,21 +64,21 @@
     display: block;
     text-align: center;
     font-size: 18px;
-    color: #0e6e02;
+    color: #7e67e2;
     transition-duration: 0.25s;
     }
     .home-container form input:hover {
-    background-color: #0e6e02;
+    background-color: #7e67e2;
     color:#FBD3E9;
     }
     .home-container form input:focus {
-    background-color:#0e6e02;
+    background-color:#7e67e2;
     width: 300px;
     color:#FBD3E9;
     }
     .home-container form ::placeholder
     {
-    color:#0e6e02;
+    color:#7e67e2;
     }
     .home-container form input:hover::placeholder
     {
@@ -89,7 +89,7 @@
     -moz-appearance: none;
     appearance: none;
     outline: 0;
-    background-color: #0e6e02;
+    background-color: #7e67e2;
     border: 0;
     padding: 10px 15px;
     color: #FBD3E9;
@@ -100,10 +100,10 @@
     transition-duration: 0.25s;
     }
     .home-container form button:hover {
-    border: 1px solid  #0e6e02;
+    border: 1px solid  #7e67e2;
     border-radius: 5px;
     background-color: #f5f7f9;
-    color: #0e6e02;
+    color: #7e67e2;
     }
     /* webcam  */
     .home-container .webcam-container
